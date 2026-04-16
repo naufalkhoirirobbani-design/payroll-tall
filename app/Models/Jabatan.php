@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Jabatan extends Model
+{
+    protected $table = 'jabatan';
+
+    protected $fillable = ['departemen_id', 'nama', 'gaji_pokok'];
+
+    /**
+     * Relasi Many-to-One: Banyak jabatan boleh dimilik 1 Departemen
+     */
+
+    public function departemen()
+    {
+        return $this -> belongsTo(Departemen::class);
+    }
+}
