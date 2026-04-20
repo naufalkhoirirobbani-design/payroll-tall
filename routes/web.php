@@ -14,6 +14,8 @@ Route::middleware('auth')->group(function () {
         return "ini adalah dashboard, nanti akan diganti dengan halaman dashboard yang sebenarnya";
     })->name('dashboard');
 
+    Route::get('/departemen', App\Livewire\master\DepartemenIndex::class)->name('departemen.index');
+
     Route::post('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();
