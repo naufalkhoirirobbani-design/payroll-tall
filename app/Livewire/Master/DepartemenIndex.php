@@ -21,6 +21,7 @@ class DepartemenIndex extends Component
     public $isOpen = false;
     public $search = '';
 
+    // Reset pagination ketika melakukan search
     public function updatingSearch()
     {
         $this->resetPage();
