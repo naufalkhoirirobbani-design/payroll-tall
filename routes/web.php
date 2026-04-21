@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+// Pastikan semua Livewire component di-import
+use App\Livewire\Master\DepartemenIndex;
+use App\Livewire\Master\JabatanIndex;
+use App\Livewire\Karyawan\KaryawanIndex;
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
 });
@@ -14,9 +19,12 @@ Route::middleware('auth')->group(function () {
         return "ini adalah dashboard, nanti akan diganti dengan halaman dashboard yang sebenarnya";
     })->name('dashboard');
 
-    Route::get('/departemen', App\Livewire\master\DepartemenIndex::class)->name('departemen.index');
-    Route::get('/jabatan', App\Livewire\master\DepartemenIndex::class)->name('jabatan.index');
+    // Route ke Livewire component
+    Route::get('/departemen', DepartemenIndex::class)->name('departemen.index');
+    Route::get('/jabatan', JabatanIndex::class)->name('jabatan.index');
+    Route::get('/karyawan', KaryawanIndex::class)->name('karyawan.index');
 
+    // Logout route
     Route::post('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();
@@ -24,4 +32,3 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('login');
     })->name('logout');
 });
-

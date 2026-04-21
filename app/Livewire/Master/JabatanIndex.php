@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Livewire\Master;
 
-use Livewire\Attribute\Layout;
-use Livewire\Attribute\Title;
+
+use App\Models\Departemen;
+use App\Models\Jabatan;
+use Laravel\Prompts\Title;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Jabatan;
-use App\Models\Departemen;
 
 #[Layout('components.layout.app')]
 #[Title('Manajemen Jabatan')]
