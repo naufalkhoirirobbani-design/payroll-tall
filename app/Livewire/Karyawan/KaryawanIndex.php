@@ -2,27 +2,56 @@
 
 namespace App\Livewire\Karyawan;
 
+use App\Models\Jabatan;
+use App\Models\Karyawan;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Karyawan; // pastikan model Karyawan di-import
 
 #[Layout('components.layouts.app')]
-#[Title('Data karyawan')]
+#[Title('Data Karyawan')]
 class KaryawanIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
 
-    // Properti untuk detail
+    // Properti Modal Form CRUD
+    public $isFormModalOpen = false;
+    public $karyawan_id, $nik, $nama, $email, $telepon, $jenis_kelamin;
+    public $departemen_id, $jabatan_id, $tanggal_masuk, $status;
+    public $bank, $no_rekening, $gaji_pokok, $tunjangan;
+
+    // Properti untuk Modal detail
     public $isDetailModalOpen = false;
     public $karyawanDetail;
 
+    // Dropdown Dinamis untuk Jabatan
+    public $jabatans_dropdown = [];
+
+    // --- Event ketika departemen berubah ---
+    public function updatedDepartemenId($value)
+    {
+        $this->jabatans_dropdown = Jabatan::where('departemen_id', $value)->get();
+        $this->jabatan_id = null;
+        $this->gaji_pokok = 0;
+    }
+
+    // --- Auto-fill gaji pokok berdasarkan jabatan ---
+    public function updateJabatanId($value)
+    {
+        if ($value) {
+            $jabatan = Jabatan::find($value);
+            if ($jabatan) {
+                $this->gaji_pokok = $jabatan->gaji_pokok;
+            }
+        }
+    }
+
     public function updatingSearch()
     {
-        $this->resetPage(); // harus pakai tanda kurung
+        $this->resetPage();
     }
 
     public function render()
@@ -35,20 +64,128 @@ class KaryawanIndex extends Component
             ->orderBy('id', 'desc')
             ->paginate(10);
 
-        return view('livewire.karyawan.karyawan-index', [
-            'karyawan' => $karyawan,
-        ]);
+        //Ambil Semua departemen untuk dropdhon filter
+        $departemen_dropdown = Departemen::orderBy('nama', 'asc')->get();
+
+        return view('livewire.karyawan.karyawan-index', compact('karyawans', 'departemens_dropdown'));
     }
 
+    // --- Detail Modal ---
     public function showDetail($id)
     {
-        // Ambil data karyawan dan relasi
         $this->karyawanDetail = Karyawan::with(['departemen', 'jabatan'])->findOrFail($id);
         $this->isDetailModalOpen = true;
     }
 
-    public function closeNotFinish()
+    public function closeDetailModal()
     {
-        session()->flash('info', 'Fitur ini belum selesai.');
+        $this->resetInputFields();
+        $this->resetValidation();
+        $this->isDetailModalOpen = false;
+    }
+
+    public function closeFormModal()
+    {
+        $this->isFormModalOpen = false;
+        $this->resetValidation();
+        $this->resetInputFields();
+    }
+
+    // --- Reset Input ---
+    public function resetInputFields()
+    {
+        $this->karyawan_id = null;
+        $this->nik = '';
+        $this->nama = '';
+        $this->email = '';
+        $this->telepon = '';
+        $this->jenis_kelamin = '';
+        $this->departemen_id = '';
+        $this->jabatan_id = '';
+        $this->tanggal_masuk = date('Y-m-d');
+        $this->status = 'aktif';
+        $this->bank = '';
+        $this->no_rekening = '';
+        $this->gaji_pokok = '';
+        $this->tunjangan = '';
+        $this->jabatans_dropdown = [];
+    }
+
+    // --- CRUD ---
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->isFormModalOpen = true;
+    }
+
+    public function edit($id)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+
+        $this->karyawan_id = $karyawan->id;
+        $this->nik = $karyawan->nik;
+        $this->nama = $karyawan->nama;
+        $this->email = $karyawan->email;
+        $this->telepon = $karyawan->telepon;
+        $this->jenis_kelamin = $karyawan->jenis_kelamin;
+        $this->departemen_id = $karyawan->departemen_id;
+        $this->jabatan_id = $karyawan->jabatan_id;
+        $this->tanggal_masuk = $karyawan->tanggal_masuk;
+        $this->status = $karyawan->status;
+        $this->bank = $karyawan->bank;
+        $this->no_rekening = $karyawan->no_rekening;
+        $this->gaji_pokok = $karyawan->gaji_pokok;
+        $this->tunjangan = $karyawan->tunjangan;
+
+        $this->jabatans_dropdown = Jabatan::where('departemen_id', $this->departemen_id)->get();
+        $this->isFormModalOpen = true;
+    }
+
+    public function store()
+    {
+        $this->validate([
+            'nik' => 'required|unique:karyawan,nik,' . $this->karyawan_id,
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:karyawan,email,' . $this->karyawan_id,
+            'telepon' => 'required',
+            'jenis_kelamin' => 'required|in:l,p',
+            'departemen_id' => 'required|exists:departemen,id',
+            'jabatan_id' => 'required|exists:jabatan,id',
+            'tanggal_masuk' => 'required|date',
+            'status' => 'required|in:aktif,non-aktif',
+            'no_rekening' => 'required',
+            'gaji_pokok' => 'required|integer|min:0',
+            'tunjangan' => 'nullable|integer|min:0',
+        ]);
+
+        Karyawan::updateOrCreate(
+            ['id' => $this->karyawan_id],
+            [
+                'nik' => $this->nik,
+                'nama' => $this->nama,
+                'email' => $this->email,
+                'telepon' => $this->telepon,
+                'jenis_kelamin' => $this->jenis_kelamin,
+                'departemen_id' => $this->departemen_id,
+                'jabatan_id' => $this->jabatan_id,
+                'tanggal_masuk' => $this->tanggal_masuk,
+                'status' => $this->status,
+                'bank' => $this->bank,
+                'no_rekening' => $this->no_rekening,
+                'gaji_pokok' => $this->gaji_pokok,
+                'tunjangan' => $this->tunjangan,
+            ]
+        );
+
+        session()->flash('message', $this->karyawan_id ? 'Data karyawan berhasil diperbarui.' : 'Data karyawan berhasil ditambahkan.');
+        $this->closeFormModal();
+    }
+
+    public function delete($id)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+        $karyawan->delete();
+
+        session()->flash('message', 'Data karyawan berhasil dihapus.');
     }
 }
