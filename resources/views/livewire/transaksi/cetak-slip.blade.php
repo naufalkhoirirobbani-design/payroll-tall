@@ -64,7 +64,7 @@
                     </tr>
                     <tr>
                         <td class="py-2">Tunjangan Tetap</td>
-                        <td class="py-2 text-right">Rp {{ number_format($penggajian->tunjangan_tetap, 0, ',', '.') }}
+                        <td class="py-2 text-right">Rp {{ number_format($penggajian->tunjangan, 0, ',', '.') }}
                         </td>
                     </tr>
                 </table>
@@ -75,7 +75,7 @@
                 <table class="w-full text-sm">
                     <tr>
                         <td class="py-2">Potongan BPJS (3%)</td>
-                        <td class="py-2 text-right text-red-600">(Rp {{ number_format($penggajian->potongan_bpjs, 0, ',', '.') }})</td>
+                        <td class="py-2 text-right text-red-600">(Rp {{ number_format($penggajian->potongan, 0, ',', '.') }})</td>
                     </tr>
                 </table>
             </div>
