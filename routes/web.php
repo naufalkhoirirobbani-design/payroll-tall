@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Livewire\Master\DepartemenIndex;
 use App\Livewire\Master\JabatanIndex;
 use App\Livewire\Karyawan\KaryawanIndex;
+use App\Livewire\Transaksi\PenggajianIndex;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', Login::class)->name('login');
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/departemen', DepartemenIndex::class)->name('departemen.index');
     Route::get('/jabatan', JabatanIndex::class)->name('jabatan.index');
     Route::get('/karyawan', KaryawanIndex::class)->name('karyawan.index');
+    Route::get('/penggajian', PenggajianIndexIndex::class)->name('penggajian.index');
 
     // Logout route
     Route::post('/logout', function (Request $request) {

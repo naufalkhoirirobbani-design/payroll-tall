@@ -8,7 +8,7 @@ class penggajihan extends Model
 {
     protected $table = 'penggajian';
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     public function karyaman()
     {
