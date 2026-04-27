@@ -112,7 +112,7 @@
                             </td>
 
                             <td class="px-6 py-4 text-center font-medium">
-                                <a href="" target="_blank"
+                                <a href="{{ route('penggajian.cetak-slip', $gaji->id) }}" target="_blank"
                                     class="text-blue-600 hover:text-blue-900 font-bold mr-3">
                                     Cetak
                                 </a>

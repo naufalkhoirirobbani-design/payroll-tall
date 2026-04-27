@@ -21,10 +21,11 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // Route ke Livewire component
-    Route::get('/departemen', DepartemenIndex::class)->name('departemen.index');
-    Route::get('/jabatan', JabatanIndex::class)->name('jabatan.index');
-    Route::get('/karyawan', KaryawanIndex::class)->name('karyawan.index');
-    Route::get('/penggajian', PenggajianIndexIndex::class)->name('penggajian.index');
+    Route::get('/departemen', App\Livewire\Master\DepartemenIndex::class)->name('departemen.index');
+    Route::get('/jabatan', App\Livewire\Master\JabatanIndex::class)->name('jabatan.index');
+    Route::get('/karyawan', App\Livewire\Karyawan\KaryawanIndex::class)->name('karyawan.index');
+    Route::get('/penggajian', App\Livewire\Transaksi\PenggajianIndex::class)->name('penggajian.index');
+    Route::get('/penggajian/cetak/{id}', App\Livewire\Transaksi\CetakSlip::class)->name('penggajian.cetak-slip');
 
     // Logout route
     Route::post('/logout', function (Request $request) {
