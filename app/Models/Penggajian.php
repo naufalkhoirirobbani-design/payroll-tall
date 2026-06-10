@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class penggajihan extends Model
+class Penggajian extends Model
 {
     protected $table = 'penggajian';
 
     protected $guarded = [];
 
-    public function karyaman()
+    public function karyawan()
     {
-        return $this->belongsTo(karyawan::class);
+        return $this->belongsTo(Karyawan::class);
     }
 }

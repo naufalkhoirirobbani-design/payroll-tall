@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tanggal_proses');
             $table->integer('gaji_pokok');
             $table->integer('tunjangan');
-            $table->integer('potonagan');
+            $table->integer('potongan');
             $table->integer('total_gaji');
             
             $table->timestamps();

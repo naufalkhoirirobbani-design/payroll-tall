@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    @forelse ($departemens as $index -> $dept)
+                    @forelse ($departemens as $index => $dept)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $departemens->firstItem() + $index }}</td>
                             <td class="px-6 py-4 text-sm font-medium text-gray-800">{{ $dept->kode }}</td>
@@ -55,7 +55,7 @@
                             <td class="px-6 py-4 text-sm text-center font-medium">
                                 <button wire:click="edit({{ $dept->id }})"
                                     class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
-                                <button wire:click="edit({{ $dept->id }})"
+                                <button wire:click="delete({{ $dept->id }})"
                                     wire:confirm="Apakah anda yakin menghapus departemen ini?"
                                     class="text-red-600 hover:text-red-900">Hapus</button>
                             </td>
@@ -71,7 +71,7 @@
             </table>
         </div>
         <div class="p-4 border-t border-gray-200">
-            {{ $departemen->link() }}
+            {{ $departemens->links() }}
         </div>
     </div>
 
@@ -80,7 +80,7 @@
             role="dialog" aria-modal="true">
             <div class="fixed inset-0 bg-gray-800/60 backdrop-blur-sm transition-opacity" @click="isOpen = false"></div>
             <div class="relative bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden z-10">
-                <form wire:submit.prevent="story()">
+                <form wire:submit.prevent="store()">
                     <div class="px-6 py-5">
                         <h3 class="text-xl font-bold text-gray-900 mb-5 border-b pb-2">
                             {{ $departemen_id ? 'Edit departemen' : 'Tambah Departemen' }}

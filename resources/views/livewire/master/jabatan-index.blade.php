@@ -48,9 +48,9 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    @forelse ($jabatan as $index => $jabatan)
+                    @forelse ($jabatans as $index => $jabatan)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 text-sm text-gray-500"> {{ $jabatan->firstItem() + $index }} </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ $jabatans->firstItem() + $index }} </td>
                             <td class="px-6 py-4 text-sm text-gray-600">
                                 <span
                                     class="bg-gray-200 text-gray-700 py-1 px-2 rounded-md text-xs font-bold">{{ $jabatan->departemen->kode ?? '-' }}</span>
@@ -62,7 +62,8 @@
                             <td class="px-6 py-4 text-sm text-center font-medium">
                                 <button wire:click="edit({{ $jabatan->id }})"
                                     class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
-                                <button wire:click="edit({{ $jabatan->id }})"
+                                <button wire:click="delete({{ $jabatan->id }})"
+                                    wire:confirm="Apakah anda yakin menghapus jabatan ini?"
                                     class="text-red-600 hover:text-red-900">Hapus</button>
                             </td>
                         </tr>
@@ -108,7 +109,7 @@
                             <select wire:model="departemen_id"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                                 <option value="">-- Pilih Departemen --</option>
-                                @foreach ($departemens as $item)
+                                @foreach ($departemens as $dept)
                                     <option value="{{ $dept->id }}">{{ $dept->kode }} . {{ $dept->nama }}
                                     </option>
                                 @endforeach

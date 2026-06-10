@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('telepon');
-            $table->enum('jenis_kelamin', ['L', 'p']);
+            $table->enum('jenis_kelamin', ['L', 'P']);
             $table->date('tanggal_masuk');
 
             // Relast

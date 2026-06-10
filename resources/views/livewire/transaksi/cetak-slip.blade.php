@@ -83,7 +83,7 @@
 
         <div class="border-t-2 border-gray-800 pt-4 flex justify-between items-center mb-16">
             <h3 class="text-lg font-bold text-gray-800 uppercase">Total Take Home Pay</h3>
-            <h2 class="text-2xl font-extrabold text-green-700">Rp ({ number_format($penggajian->total_gaji, 0, ',', '.') })</h2>
+            <h2 class="text-2xl font-extrabold text-green-700">Rp {{ number_format($penggajian->total_gaji, 0, ',', '.') }}</h2>
         </div>
 
         <div class="grid grid-cols-2 gap-8 text-center text-sm mt-12 pt-8">

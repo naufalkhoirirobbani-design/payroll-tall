@@ -56,7 +56,7 @@ class KaryawanIndex extends Component
 
     public function render()
     {
-        $karyawan = Karyawan::with(['departemen', 'jabatan'])
+        $karyawans = Karyawan::with(['departemen', 'jabatan'])
             ->where(function ($query) {
                 $query->where('nama', 'like', '%' . $this->search . '%')
                       ->orWhere('nik', 'like', '%' . $this->search . '%');

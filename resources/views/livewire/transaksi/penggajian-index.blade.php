@@ -87,7 +87,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    @forelse ($penggajian as $item)
+                    @forelse ($penggajians as $gaji)
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4">
                                 <div class="font-bold text-gray-800 text-sm">
@@ -108,7 +108,7 @@
                             </td>
 
                             <td class="px-6 py-4 font-bold text-green-700 text-lg">
-                                Rp {{ number_format($gaji->netto, 0, ',', '.') }}
+                                Rp {{ number_format($gaji->total_gaji, 0, ',', '.') }}
                             </td>
 
                             <td class="px-6 py-4 text-center font-medium">

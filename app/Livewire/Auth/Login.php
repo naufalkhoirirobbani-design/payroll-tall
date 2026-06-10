@@ -7,12 +7,12 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-#[Layout('components.layout.app')]
+#[Layout('components.layouts.app')]
 #[Title('Login - Sistem Payroll')]
 class Login extends Component
 {
-    public $email;
-    public $password;
+    public $email = '';
+    public $password = '';
 
     public function login()
     {

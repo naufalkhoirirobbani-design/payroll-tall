@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return "ini adalah dashboard, nanti akan diganti dengan halaman dashboard yang sebenarnya";
+        return view('dashboard');
     })->name('dashboard');
 
     // Route ke Livewire component

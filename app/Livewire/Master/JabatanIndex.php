@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('components.layout.app')]
+#[Layout('components.layouts.app')]
 #[Title('Manajemen Jabatan')]
 class JabatanIndex extends Component
 {
@@ -25,7 +25,7 @@ class JabatanIndex extends Component
     public function render()
     {
         // Query dengan relasi departemen
-        $jabatan = Jabatan::with('departemen')
+        $jabatans = Jabatan::with('departemen')
             ->where('nama', 'like', '%' . $this->search . '%')
             ->orWhereHas('departemen', function ($query) {
                 $query->where('nama', 'like', '%' . $this->search . '%');
@@ -37,7 +37,7 @@ class JabatanIndex extends Component
         $departemens = Departemen::orderBy('nama', 'asc')->get();
 
         return view('livewire.master.jabatan-index', [
-            'jabatan' => $jabatan,
+            'jabatans' => $jabatans,
             'departemens' => $departemens,
         ]);
     }

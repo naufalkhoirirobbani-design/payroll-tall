@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Departemen;
 
-#[Layout('components.layout.app')]
+#[Layout('components.layouts.app')]
 #[Title('Manajemen Departemen')]
 class DepartemenIndex extends Component
 {

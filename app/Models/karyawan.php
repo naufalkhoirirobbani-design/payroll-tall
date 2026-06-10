@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class karyawan extends Model
+class Karyawan extends Model
 {
-    protected $table = 'karyaman';
+    protected $table = 'karyawan';
 
     protected $guarded = ['id'];
 
     public function departemen()
     {
-        return $this->belongsTo(departemen::class);
+        return $this->belongsTo(Departemen::class);
     }
 
     public function jabatan()
@@ -22,6 +22,6 @@ class karyawan extends Model
 
     public function penggajian()
     {
-        return $this->belongsTo(penggajihan::class);
+        return $this->hasMany(Penggajian::class);
     }
 }

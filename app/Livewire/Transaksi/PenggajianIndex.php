@@ -2,12 +2,17 @@
 
 namespace App\Livewire\Transaksi;
 
+use App\Models\Karyawan;
+use App\Models\Penggajian;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Penggajian;
+
+#[Layout('components.layouts.app')]
 
 class PenggajianIndex extends Component
 {
+    
     use WithPagination;
 
     public $bulan;
